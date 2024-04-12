@@ -5,4 +5,4 @@ requests==2.31.0
 bio==1.7.0
 matplotlib==3.8.2
 graphein==1.7.6
-python_genutils==0.2.0
+python_genutils
