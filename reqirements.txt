@@ -1,0 +1,7 @@
+stmol==0.0.9
+py3Dmol==2.1.0
+biotite==0.40.0
+requests==2.31.0
+bio==1.7.0
+matplotlib==3.8.2
+graphein==1.7.6
