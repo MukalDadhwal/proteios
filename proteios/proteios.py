@@ -18,9 +18,9 @@ from graphein.protein.edges.distance import (
 from graphein.protein.visualisation import plotly_protein_structure_graph
 from graphein.protein.analysis import plot_edge_type_distribution
 from graphein.protein.analysis import plot_degree_by_residue_type
-from PIL import Image
-from fpdf import FPDF
-import base64
+# from PIL import Image
+# from fpdf import FPDF
+# import base64
 
 
 tab1, tab2, tab3 = st.tabs(["3-D Model Visualization", "Insights", "About the Project"])
