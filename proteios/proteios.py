@@ -1,5 +1,4 @@
 import streamlit as st
-from stmol import showmol
 import py3Dmol
 import requests
 import biotite.structure.io as bsio
@@ -18,6 +17,7 @@ from graphein.protein.edges.distance import (
 from graphein.protein.visualisation import plotly_protein_structure_graph
 from graphein.protein.analysis import plot_edge_type_distribution
 from graphein.protein.analysis import plot_degree_by_residue_type
+from stmol import showmol
 # from PIL import Image
 # from fpdf import FPDF
 # import base64
