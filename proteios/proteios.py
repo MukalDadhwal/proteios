@@ -28,7 +28,7 @@ import os
 tab1, tab2, tab3, tab4 = st.tabs(["3-D Model Visualization", "Insights","Analysis", "About the Project"])
 
 with st.sidebar.container(height=250,border=False):
-    logo_url = "proteios\logo_1.png"
+    logo_url = "logo_1.png"
     st.image(logo_url)
 
 
