@@ -1,10 +1,9 @@
 import streamlit as st
-from stmol import showmol
 import py3Dmol
 import requests
 import biotite.structure.io as bsio
 import py3Dmol
-from Bio import PDB
+from Bio.PDB import PDBParser
 import matplotlib.pyplot as plt
 from graphein.protein.analysis import plot_residue_composition
 from graphein.protein.graphs import construct_graph
@@ -18,12 +17,15 @@ from graphein.protein.edges.distance import (
 from graphein.protein.visualisation import plotly_protein_structure_graph
 from graphein.protein.analysis import plot_edge_type_distribution
 from graphein.protein.analysis import plot_degree_by_residue_type
+from stmol import showmol
+from tempfile import NamedTemporaryFile
+import os
 # from PIL import Image
 # from fpdf import FPDF
 # import base64
 
 
-tab1, tab2, tab3 = st.tabs(["3-D Model Visualization", "Insights", "About the Project"])
+tab1, tab2, tab3, tab4 = st.tabs(["3-D Model Visualization", "Insights","Analysis", "About the Project"])
 
 with st.sidebar.container(height=250,border=False):
     logo_url = "proteios\logo_1.png"
@@ -145,22 +147,22 @@ def about_us():
     It utilizes Graphene and BioPython modules to generate 3D views of proteins and provide in-depth information about their structure and constituents.
     """)
 
-    st.header("Mukal Dhadhwal:")
+    st.header("Mukal Dadhwal:")
     st.write("""
     LinkedIn: [Mukal's Link](https://www.linkedin.com/in/mukal-dadhwal/)
     """)
 
-    st.header("Brahamdeep Singh.")
+    st.header("Brahamdeep Singh Sabharwal:")
     st.write("""
     LinkedIn: [Brahamdeep's Link](https://www.linkedin.com/in/brahamdeep-singh-sabharwal-14a914256/)
     """)
 
-    st.header("Ishwardeep Singh.")
+    st.header("Ishwardeep Singh:")
     st.write("""
     LinkedIn: [Ishwardeep's Link](https://www.linkedin.com/in/ishwardeep-singh-405a9324a/)
     """)
 
-    st.header("Prabhsurat Singh.")
+    st.header("Prabhsurat Singh:")
     st.write("""
     LinkedIn: [Prabhsurat's Link](https://www.linkedin.com/in/prabhsurat-singh-1868052ab/)
     """)
@@ -188,8 +190,97 @@ with tab2:
     st.write(fig4)
 
 
-with tab3:
+with tab4:
     about_us()
+
+with tab3:
+    st.title("Generate Protein Structure from PDB file")
+
+    col1,col2 = st.columns(2)
+    disp_col2 = False
+    
+    
+    st.header("File Generated Structure")
+    file = st.file_uploader("Please add PDB file", type=['pdb'])
+    result = st.button("Display")
+    
+    if result and file is None:
+        st.warning("Please add a valid file!!!!")
+            
+            
+    if result and file is not None:
+        # Save uploaded file temporarily
+        with open("analyze.pdb", "wb") as f:
+            f.write(file.getvalue())
+        graph_analysis = generate_visual_graphein("analyze.pdb")
+            
+        st.write(plotly_protein_structure_graph(graph_analysis, node_size_multiplier=1))
+        disp_col2 = True
+
+        # os.unlink("analyze.pdb")
+
+
+    st.divider()
+
+
+    if result: 
+        st.header("Standard Structure")
+
+        g = generate_visual_graphein("6lhn_modified.pdb")
+        st.write(plotly_protein_structure_graph(g, node_size_multiplier=1))
+
+    st.divider()
+
+    if result:
+        def get_residue_composition(pdb_file):
+            parser = PDBParser()
+            structure = parser.get_structure('structure', pdb_file)
+            
+            residue_composition = {}
+            total_residues = 0
+            
+            for model in structure:
+                for chain in model:
+                    for residue in chain:
+                        residue_name = residue.get_resname()
+                        total_residues += 1
+                        if residue_name in residue_composition:
+                            residue_composition[residue_name] += 1
+                        else:
+                            residue_composition[residue_name] = 1
+            
+            # Calculate percentage of each residue type
+            for residue_name, count in residue_composition.items():
+                residue_composition[residue_name] = count / total_residues * 100
+            
+            return residue_composition
+        
+        def compare_residue_composition(pdb_file1, pdb_file2):
+            composition1 = get_residue_composition(pdb_file1)
+            composition2 = get_residue_composition(pdb_file2)
+            
+            # print("Residue Composition Comparison:")
+            # print("Residue Composition for File 1:")
+            # print(composition1)
+            # print("Residue Composition for File 2:")
+            # print(composition2)
+            
+            # Compare percentage difference of each residue type
+            st.header("\nComparison of Percentage Difference:")
+            for residue_name in composition1.keys():
+                percentage_diff = composition1[residue_name] - composition2.get(residue_name, 0)
+                st.write(f"{residue_name}: {percentage_diff:.2f}%")
+
+        compare_residue_composition('analyze.pdb', '6lhn_modified.pdb')
+        os.unlink("analyze.pdb")
+
+
+
+
+
+        
+        
+    
 
 
 
