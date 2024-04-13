@@ -3,7 +3,7 @@ import py3Dmol
 import requests
 import biotite.structure.io as bsio
 import py3Dmol
-from Bio import PDB
+from Bio.PDB import PDBParser
 import matplotlib.pyplot as plt
 from graphein.protein.analysis import plot_residue_composition
 from graphein.protein.graphs import construct_graph
@@ -18,12 +18,14 @@ from graphein.protein.visualisation import plotly_protein_structure_graph
 from graphein.protein.analysis import plot_edge_type_distribution
 from graphein.protein.analysis import plot_degree_by_residue_type
 from stmol import showmol
+from tempfile import NamedTemporaryFile
+import os
 # from PIL import Image
 # from fpdf import FPDF
 # import base64
 
 
-tab1, tab2, tab3 = st.tabs(["3-D Model Visualization", "Insights", "About the Project"])
+tab1, tab2, tab3, tab4 = st.tabs(["3-D Model Visualization", "Insights", "About the Project", "Analysis"])
 
 with st.sidebar.container(height=250,border=False):
     logo_url = "proteios\logo_1.png"
@@ -190,6 +192,52 @@ with tab2:
 
 with tab3:
     about_us()
+
+with tab4:
+    st.title("Generate Protein Structure from PDB file")
+
+    col1,col2 = st.columns(2)
+    disp_col2 = False
+    
+    
+    st.header("File Generated Structure")
+    file = st.file_uploader("Please add PDB file", type=['pdb'])
+    result = st.button("Add File")
+    
+    if result and file is None:
+        st.warning("Please add a valid file!!!!")
+            
+            
+    if result and file is not None:
+        # Save uploaded file temporarily
+        with open("analyze.pdb", "wb") as f:
+            f.write(file.getvalue())
+        graph_analysis = generate_visual_graphein("analyze.pdb")
+            
+        st.write(plotly_protein_structure_graph(graph_analysis, node_size_multiplier=1))
+        disp_col2 = True
+
+        os.unlink("analyze.pdb")
+
+
+    st.divider()
+
+
+    if result: 
+        st.header("Standard Structure")
+
+        g = generate_visual_graphein("predicted.pdb")
+        st.write(plotly_protein_structure_graph(g, node_size_multiplier=1))
+
+    
+
+
+
+
+
+        
+        
+    
 
 
 
