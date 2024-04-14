@@ -267,6 +267,10 @@ with tab3:
             
             # Compare percentage difference of each residue type
             st.header("\nComparison of Percentage Difference:")
+            st.write("""
+                    This gives the difference in composition of a particular amino acid in the protein by subtracting the 
+                     residue composition of standard graph from the residue composition of the generated graph
+            """)
             for residue_name in composition1.keys():
                 percentage_diff = composition1[residue_name] - composition2.get(residue_name, 0)
                 st.write(f"{residue_name}: {percentage_diff:.2f}%")
