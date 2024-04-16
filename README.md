@@ -24,6 +24,6 @@ Our mission is to empower researchers and scientists with innovative tools and r
 - Mukal Dadhwal
 - Prabsurat Singh
 - Ishwardeep Singh
-- Brahamdeep Sabarwal
+- Brahamdeep Singh Sabharwal
 
 
