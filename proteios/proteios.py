@@ -1,5 +1,5 @@
 import streamlit as st
-import py3Dmol
+#import py3Dmol
 import requests
 import biotite.structure.io as bsio
 import py3Dmol
@@ -17,7 +17,7 @@ from graphein.protein.edges.distance import (
 from graphein.protein.visualisation import plotly_protein_structure_graph
 from graphein.protein.analysis import plot_edge_type_distribution
 from graphein.protein.analysis import plot_degree_by_residue_type
-from stmol import showmol
+#from stmol import showmol
 from tempfile import NamedTemporaryFile
 import os
 # from PIL import Image
@@ -28,22 +28,22 @@ import os
 tab1, tab2, tab3, tab4 = st.tabs(["3-D Model Visualization", "Insights","Analysis", "About the Project"])
 
 with st.sidebar.container(height=250,border=False):
-    logo_url = "proteios\logo_1.png"
+    logo_url = "logo_1.png"
     st.image(logo_url)
 
 
 st.sidebar.write("A one option tool to Visualise Protein Compound by using libraries like Graphene and BioPython to generate 3D views of proteins and provide in-depth information about their structure and constituents.\n")
 
 # stmol
-def render_mol(pdb):
-    pdbview = py3Dmol.view()
-    pdbview.addModel(pdb,'pdb')
-    pdbview.setStyle({'cartoon':{'color':'spectrum'}})
-    pdbview.setBackgroundColor('white')#('0xeeeeee')
-    pdbview.zoomTo()
-    pdbview.zoom(2, 800)
-    pdbview.spin(True)
-    showmol(pdbview, height = 500,width=800)
+# def render_mol(pdb):
+#     pdbview = py3Dmol.view()
+#     pdbview.addModel(pdb,'pdb')
+#     pdbview.setStyle({'cartoon':{'color':'spectrum'}})
+#     pdbview.setBackgroundColor('white')#('0xeeeeee')
+#     pdbview.zoomTo()
+#     pdbview.zoom(2, 800)
+#     pdbview.spin(True)
+#     showmol(pdbview, height = 500,width=800)
 
 
 def generate_visual_graphein(pdb_file):
@@ -267,6 +267,10 @@ with tab3:
             
             # Compare percentage difference of each residue type
             st.header("\nComparison of Percentage Difference:")
+            st.write("""
+                    This gives the difference in composition of a particular amino acid in the protein by subtracting the 
+                     residue composition of standard graph from the residue composition of the generated graph
+            """)
             for residue_name in composition1.keys():
                 percentage_diff = composition1[residue_name] - composition2.get(residue_name, 0)
                 st.write(f"{residue_name}: {percentage_diff:.2f}%")

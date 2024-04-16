@@ -1,4 +1,4 @@
-stmol==0.0.9
+
 py3Dmol==2.1.0
 biotite==0.40.0
 requests==2.31.0
