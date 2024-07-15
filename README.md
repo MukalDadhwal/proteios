@@ -19,11 +19,11 @@ Our mission is to empower researchers and scientists with innovative tools and r
 - User-Friendly Interface: Built on Streamlit, offering an intuitive and user-friendly interface for seamless navigation and analysis.
 - Customizable Analysis: Allows users to input specific protein sequences or access a database of known and unknown proteins for tailored predictions and insights.
 
-## Team Members (DOOM PATROL)
+## Contributors
 
 - Mukal Dadhwal
-- Prabsurat Singh
-- Ishwardeep Singh
-- Brahamdeep Singh Sabharwal
+- Prabsurat Singh(https://github.com/prabhsuratsingh)
+- Ishwardeep Singh(https://github.com/ishwardeepp)
+- Brahamdeep Singh Sabharwal(https://github.com/Brahamdeep)
 
 
