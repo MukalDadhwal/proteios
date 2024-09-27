@@ -226,7 +226,7 @@ with tab3:
     if result: 
         st.header("Standard Structure")
 
-        g = generate_visual_graphein("6lhn_modified.pdb")
+        g = generate_visual_graphein("4kgc.pdb")
         st.write(plotly_protein_structure_graph(g, node_size_multiplier=1))
 
     st.divider()
@@ -275,7 +275,7 @@ with tab3:
                 percentage_diff = composition1[residue_name] - composition2.get(residue_name, 0)
                 st.write(f"{residue_name}: {percentage_diff:.2f}%")
 
-        compare_residue_composition('analyze.pdb', '6lhn_modified.pdb')
+        compare_residue_composition('analyze.pdb', '4kgc.pdb')
         os.unlink("analyze.pdb")
 
 
